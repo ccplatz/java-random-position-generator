@@ -3,24 +3,40 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Position> positions = new ArrayList<>();
-        positions = PositionGenerator.getPositions(300);
+        int numberOfDistances = 2000000;
+        Distance shortestDistance = null;
+        ArrayList<Position> positions = getPositons(numberOfDistances);
+        positions.sort(Position.coordinate1Comparator);
 
-        ArrayList<Distance> distances = new ArrayList<>();
         for (int i = 0; i < positions.size() - 1; i++) {
-            for (int j = 0; j < positions.size() - 1; j++) {
-                if (i == j || j < i) {
-                    continue;
+            Position position1 = positions.get(i);
+            Position position2 = positions.get(i + 1);
+
+            double distanceBetweenPositions = position1.getDistance(position2);
+            Distance distance = new Distance(distanceBetweenPositions, position1, position2);
+            if (shortestDistance == null) {
+                shortestDistance = distance;
+            } else if (position1.getDifferenceBetweenCoordinate1(position2) < shortestDistance.getDistance()) {
+                if (position1.getDistance(position2) < shortestDistance.getDistance()) {
+                    shortestDistance = distance;
                 }
-                Position position1 = positions.get(i);
-                Position position2 = positions.get(j);
-                double distanceBetweenPositions = position1.getDistance(position2);
-                Distance distance = new Distance(distanceBetweenPositions, position1, position2);
-                distances.add(distance);
             }
         }
-        distances.sort(Distance.distanceComparator);
-        //System.out.println(distances.toString());
-        System.out.println(distances.get(0).toString());
+        System.out.println(shortestDistance.toString());
+    }
+
+    private static ArrayList<Position> getPositons(int counter) {
+        ArrayList<Position> positions = new ArrayList<>();
+        Position position1;
+        Position position2 = null;
+
+        while (positions.size() < counter) {
+            position1 = PositionGenerator.getNextPosition(position2);
+            positions.add(position1);
+            position2 = PositionGenerator.getNextPosition(position1);
+            positions.add(position2);
+        }
+
+        return positions;
     }
 }

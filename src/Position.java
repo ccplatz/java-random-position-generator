@@ -1,6 +1,9 @@
+import java.util.Comparator;
+
 public class Position {
     private final long coordinate1;
     private final long coordinate2;
+    static Comparator<Position> coordinate1Comparator = Comparator.comparingLong(Position::getCoordinate1);
 
     public Position(long coordinate1, long coordinate2) {
         this.coordinate1 = coordinate1;
@@ -16,7 +19,11 @@ public class Position {
     }
 
     public double getDistance(Position p2) {
-        return Math.sqrt(Math.pow(this.coordinate1 - p2.getCoordinate1(), 2) + Math.pow(this.coordinate2 -p2.getCoordinate2(), 2));
+        return Math.sqrt(Math.pow(this.coordinate1 - p2.getCoordinate1(), 2) + Math.pow(this.coordinate2 - p2.getCoordinate2(), 2));
+    }
+
+    public double getDifferenceBetweenCoordinate1(Position p2) {
+        return p2.getCoordinate1() - coordinate1;
     }
 
     public String toString() {

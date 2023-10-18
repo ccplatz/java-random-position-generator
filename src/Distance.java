@@ -5,8 +5,6 @@ public class Distance {
     private final Position position1;
     private final Position position2;
 
-    static Comparator<Distance> distanceComparator = Comparator.comparingDouble(Distance::getDistance);
-
     public Distance(double distance, Position position1, Position position2) {
         this.distance = distance;
         this.position1 = position1;
@@ -15,14 +13,6 @@ public class Distance {
 
     public double getDistance() {
         return distance;
-    }
-
-    public Position getPosition1() {
-        return position1;
-    }
-
-    public Position getPosition2() {
-        return position2;
     }
 
     public String toString() {

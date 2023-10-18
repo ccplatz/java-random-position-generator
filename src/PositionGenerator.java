@@ -20,4 +20,28 @@ public class PositionGenerator {
 
         return positions;
     }
+
+    public static Position getNextPosition(Position previousPosition) {
+        if (previousPosition == null) {
+            return getNextPosition();
+        }
+
+        long coordinate1;
+        long coordinate2;
+
+        coordinate1 = CustomRandomGenerator.getNextRandom(previousPosition.getCoordinate2());
+        coordinate2 = CustomRandomGenerator.getNextRandom(coordinate1);
+
+        return new Position(coordinate1, coordinate2);
+    }
+
+    private static Position getNextPosition() {
+        long coordinate1;
+        long coordinate2;
+
+        coordinate1 = CustomRandomGenerator.getNextRandom();
+        coordinate2 = CustomRandomGenerator.getNextRandom(coordinate1);
+
+        return new Position(coordinate1, coordinate2);
+    }
 }
